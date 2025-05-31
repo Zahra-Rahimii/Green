@@ -1,0 +1,51 @@
+<div class="admin-report-detail">
+    <h2>جزئیات گزارش</h2>
+
+    @if (report$ | async; as report) {
+      <p><strong>عنوان:</strong> {{ report.title }}</p>
+      <p><strong>دسته‌بندی:</strong> {{ getCategoryLabel(report.category) }}</p>
+      <p><strong>نام گزارش‌دهنده:</strong> {{ report.reporterName }}</p>
+      <p><strong>شماره تلفن:</strong> {{ report.phone }}</p>
+      <p><strong>توضیحات:</strong> {{ report.description }}</p>
+      <p><strong>آدرس:</strong> {{ report.address }}</p>
+      <p><strong>تاریخ و ساعت ثبت:</strong> {{ report.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</p>
+      <p><strong>آخرین به‌روزرسانی:</strong> {{ report.updatedAt ? (report.updatedAt | localDate:'jYYYY-jMM-jDD dddd HH:mm') : 'ندارد' }}</p>
+      <p><strong>ارسال به امدادگر:</strong> {{ report.isSentToRescuer ? 'بله' : 'خیر' }}</p>
+      <p><strong>تخصیص به:</strong> {{ report.assignedTo || 'تخصیص نشده' }}</p>
+      <p><strong>وضعیت:</strong> {{ getStatusLabel(status()) }}</p>
+      @if (report.image) {
+        <div class="image-preview">
+          <img [src]="report.image" alt="تصویر گزارش">
+        </div>
+      }
+      <div #mapRef id="map" style="height: 300px; width: 100%; margin-top: 20px;"></div>
+
+      <!-- نظرات ادمین -->
+      <div class="form-group">
+        <label for="adminComments">نظرات ادمین:</label>
+        <textarea id="adminComments" [(ngModel)]="adminComments" placeholder="نظرات خود را وارد کنید"></textarea>
+        <button (click)="saveAdminComments()">ذخیره نظرات</button>
+      </div>
+
+      <!-- تخصیص به امدادگر -->
+      <div class="form-group">
+        <label for="assignRescuer">تخصیص به امدادگر:</label>
+        <select id="assignRescuer" [(ngModel)]="assignedRescuer">
+          <option value="">انتخاب کنید</option>
+          @for (rescuer of rescuers; track rescuer.id) {
+            <option [value]="rescuer.username">{{ rescuer.username }}</option>
+          }
+        </select>
+        <button (click)="assignToRescuer()" [disabled]="!assignedRescuer()">تخصیص</button>
+      </div>
+    }
+
+    @if (errorMessage()) {
+      <div class="error-message">{{ errorMessage() }}</div>
+    }
+    @if (successMessage()) {
+      <div class="success-message">{{ successMessage() }}</div>
+    }
+
+    <button (click)="goBack()">بازگشت</button>
+  </div>

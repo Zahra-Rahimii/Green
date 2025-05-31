@@ -1,0 +1,38 @@
+<div class="rescuer-reports-container">
+  <h2>گزارش‌های تخصیص‌یافته</h2>
+
+  <!-- نمایش لودینگ -->
+  @if (isLoading()) {
+    <div class="loading">در حال بارگذاری گزارش‌ها...</div>
+  }
+
+  <!-- جدول گزارش‌ها -->
+  @if (filteredReports$ | async; as reports) {
+    <table>
+      <thead>
+        <tr>
+          <th>دسته‌بندی</th>
+          <th>نام گزارش‌دهنده</th>
+          <th>تاریخ و ساعت ثبت</th>
+          <th>وضعیت</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (report of reports; track report.id) {
+          <tr>
+            <td>{{ getCategoryLabel(report.category) }}</td>
+            <td>{{ report.reporterName }}</td>
+            <td>{{ report.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</td>
+            <td>{{ getStatusLabel(report.status) }}</td>
+            <td>
+              <button (click)="viewDetail(report.id)">جزئیات</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  } @else {
+    <p class="no-reports">هیچ گزارشی یافت نشد.</p>
+  }
+</div>

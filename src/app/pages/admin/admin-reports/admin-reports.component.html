@@ -1,0 +1,53 @@
+<app-header></app-header>
+<div class="admin-reports-container">
+    <h2>مدیریت گزارش‌ها</h2>
+
+    <!-- فیلترها -->
+    <div class="filters">
+      <input type="text" placeholder="جستجو بر اساس نام یا آدرس..." (input)="filterReports($event)">
+      <select (change)="filterReports($event)">
+        <option value="">همه دسته‌بندی‌ها</option>
+        @for (cat of categories; track cat.id) {
+          <option [value]="cat.id">{{ cat.label }}</option>
+        }
+      </select>
+    </div>
+
+    <!-- نمایش لودینگ -->
+    @if (isLoading()) {
+      <div class="loading">در حال بارگذاری گزارش‌ها...</div>
+    }
+
+    <!-- جدول گزارش‌ها -->
+    @if (filteredReports$ | async; as reports) {
+      <table>
+        <thead>
+          <tr>
+            <th>دسته‌بندی</th>
+            <th>نام گزارش‌دهنده</th>
+            <th>تاریخ و ساعت ثبت</th>
+            <th>ارسال به امدادگر</th>
+            <th>وضعیت</th>
+            <th>عملیات</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (report of reports; track report.id) {
+            <tr>
+              <td>{{ getCategoryLabel(report.category) }}</td>
+              <td>{{ report.reporterName }}</td>
+              <td>{{ report.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</td>
+              <td>{{ report.isSentToRescuer ? 'بله' : 'خیر' }}</td>
+              <td>{{ getStatusLabel(report.status) }}</td>
+              <td>
+                <button (click)="viewDetail(report.id)">جزئیات</button>
+                <button (click)="deleteReport(report.id)">حذف</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    } @else {
+      <p class="no-reports">هیچ گزارشی یافت نشد.</p>
+    }
+  </div>

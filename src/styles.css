@@ -1,1 +1,83 @@
-/* You can add global styles to this file, and also import other style files */
+@import "leaflet/dist/leaflet.css";
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebthin.woff') format('woff');
+  font-weight: 100;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanweblight.woff') format('woff');
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebregular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebmedium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebbold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrabold.woff') format('woff');
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebblack.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'iran_yekan';
+  src: url('/assets/fonts/iranyekanwebextrablack.woff') format('woff');
+  font-weight: 950;
+  font-style: normal;
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'iran_yekan', sans-serif;
+  font-weight: 400;   
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+body{
+   background-image: url(/assets/images/img1.png);
+  /* background: linear-gradient(-145deg,
+    #5a814f 0%,     
+    #2f4e2c 15%,   
+    #1f311d 40%,     
+    #0F1E0F 70%,    
+    #0F1E0F 100%    
+  ); */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed; 
+  font-family: 'iran_yekan', sans-serif;
+
+}

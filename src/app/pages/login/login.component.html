@@ -1,0 +1,65 @@
+<div class="login_container">
+<div class="wrapper">
+  <div class="form_wrapper">
+    <h2>ورود</h2>
+    <form class="form_group" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+      <div  class="input_group">
+        <label for="username"></label>
+        <input
+        id="username"
+        type="text"
+        formControlName="username"
+        placeholder="نام کاربری"
+        [class.invalid]="username?.touched && username?.invalid"
+        />
+        <div class="error">
+        @if (username?.touched && username?.invalid) {
+            @if (username?.errors?.['required']) {
+              <div>نام کاربری اجباری است.</div>
+            }
+            @if (username?.errors?.['minlength']) {
+              <div>حداقل 3 کاراکتر وارد کنید.</div>
+            }
+          }
+          </div>
+      </div>
+      <div class="input_group">
+        <label for="password"></label>
+        <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="رمز عبور"
+        [class.invalid]="password?.touched && password?.invalid"
+      />
+      <div class="error">
+      @if (password?.touched && password?.invalid) {
+          @if (password?.errors?.['required']) {
+            <div>رمز عبور اجباری است.</div>
+          }
+          @if (password?.errors?.['minlength']) {
+            <div>حداقل 6 کاراکتر وارد کنید.</div>
+          }
+        }
+        </div>
+    </div>
+    
+    <button class="login_btn" type="submit" [disabled]="loginForm.invalid || isLoading()">
+      {{ isLoading() ? 'در حال ورود...' : 'ورود' }}
+    </button>
+    <div class="error">
+ @if (errorMessage()) {
+      <div>{{ errorMessage() }}</div>
+    }
+    </div>
+    <div class="links">
+      <a routerLink="/register">عضویت</a>
+      <a routerLink="/forgot-password">فراموشی رمز عبور</a>
+    </div>
+  </form>
+</div>
+<!-- <div class="img_wrapper">
+  <img src="../../../assets/images/login3.jpeg" alt="">
+</div> -->
+</div>
+</div>

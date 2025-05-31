@@ -1,0 +1,40 @@
+<div class="rescuer-report-detail">
+  <h2>جزئیات گزارش</h2>
+
+  @if (report$ | async; as report) {
+    <p><strong>عنوان:</strong> {{ report.title }}</p>
+    <p><strong>دسته‌بندی:</strong> {{ getCategoryLabel(report.category) }}</p>
+    <p><strong>نام گزارش‌دهنده:</strong> {{ report.reporterName }}</p>
+    <p><strong>شماره تلفن:</strong> {{ report.phone }}</p>
+    <p><strong>توضیحات:</strong> {{ report.description }}</p>
+    <p><strong>آدرس:</strong> {{ report.address }}</p>
+    <p><strong>تاریخ و ساعت ثبت:</strong> {{ report.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</p>
+    <p><strong>آخرین به‌روزرسانی:</strong> {{ report.updatedAt ? (report.updatedAt | localDate:'jYYYY-jMM-jDD dddd HH:mm') : 'ندارد' }}</p>
+    <p><strong>وضعیت:</strong> {{ getStatusLabel(status()) }}</p>
+    @if (report.image) {
+      <div class="image-preview">
+        <img [src]="report.image" alt="تصویر گزارش">
+      </div>
+    }
+    <div #mapRef id="map" style="height: 300px; width: 100%; margin-top: 20px;"></div>
+
+    <!-- تغییر وضعیت -->
+    @if (report.isSentToRescuer) {
+      <div class="status-buttons">
+        <label>تغییر وضعیت:</label>
+        <button (click)="updateStatus('in_review')">در حال بررسی</button>
+        <button (click)="updateStatus('reviewed')">رسیدگی شده</button>
+        <button (click)="updateStatus('rejected')">رد شده</button>
+      </div>
+    }
+  }
+
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+  @if (successMessage()) {
+    <div class="success-message">{{ successMessage() }}</div>
+  }
+
+  <button (click)="goBack()">بازگشت</button>
+</div>

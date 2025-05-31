@@ -1,0 +1,81 @@
+<div class="login_container">
+<div class="wrapper">
+<div class="form_wrapper">
+    <h2>عضویت</h2>
+  <form class="form_group" [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="form-group">
+      <label for="username"></label>
+      <input
+        id="username"
+        type="text"
+        formControlName="username"
+        placeholder="نام کاربری"
+        [class.invalid]="username?.touched && username?.invalid"
+      />
+      <div class="error">
+      @if (username?.touched && username?.invalid) {
+          @if (username?.errors?.['required']) {
+            <div>نام کاربری اجباری است.</div>
+          }
+          @if (username?.errors?.['minlength']) {
+            <div>حداقل 3 کاراکتر وارد کنید.</div>
+          }
+        }
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="email"></label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        placeholder="ایمیل"
+        [class.invalid]="email?.touched && email?.invalid"
+      />
+      <div class="error">
+      @if (email?.touched && email?.invalid) {
+          @if (email?.errors?.['required']) {
+            <div>ایمیل اجباری است.</div>
+          }
+          @if (email?.errors?.['email']) {
+            <div>ایمیل نامعتبر است.</div>
+          }
+        }
+        </div>
+    </div>
+    <div class="form-group">
+      <label for="password"></label>
+      <input
+        id="password"
+        type="password"
+        formControlName="password"
+        placeholder="رمز عبور"
+        [class.invalid]="password?.touched && password?.invalid"
+      />
+      <div class="error">
+      @if (password?.touched && password?.invalid) {
+          @if (password?.errors?.['required']) {
+            <div>رمز عبور اجباری است.</div>
+          }
+          @if (password?.errors?.['minlength']) {
+            <div>حداقل 6 کاراکتر وارد کنید.</div>
+          }
+        }
+        </div>
+    </div>
+    <button class="register_btn" type="submit" [disabled]="registerForm.invalid || isLoading()">
+      {{ isLoading() ? 'در حال ثبت‌نام...' : 'ثبت‌نام' }}
+    </button>
+    <div class="error">
+@if (errorMessage()) {
+   <div>{{ errorMessage() }}</div>
+ }
+ </div>
+    <div class="links">
+      <a routerLink="/login">ورود</a>
+    </div>
+  </form>
+</div>
+
+</div>
+</div>

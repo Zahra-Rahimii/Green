@@ -1,0 +1,115 @@
+<div class="header_nav" dir="rtl">
+  @if (!isLoggedIn()) {
+    <div class="header_nav_user">
+      <button class="header_nav_user_btn">
+        <a class="header_nav_user_link" [routerLink]="['/login']">
+          <img src="/assets/images/user.svg" alt="ورود">
+        </a>
+      </button>
+    </div>
+  }
+  @if (isLoggedIn()) {
+    <button mat-icon-button class="menu-toggle" (click)="toggleMenu()">
+      <mat-icon>{{ isMenuOpen() ? 'close' : 'menu' }}</mat-icon>
+    </button>
+  }
+  @if (isLoggedIn()) {
+    <div class="header_nav_menu" [class.open]="isMenuOpen()">
+      <mat-list role="list">
+        @if (userRole() === 'admin') {
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['admin/reports']">
+              <mat-icon matListIcon>report</mat-icon>
+              <span>مدیریت گزارش‌ها</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/admin-users']">
+              <mat-icon matListIcon>people</mat-icon>
+              <span>مدیریت کاربران</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/admin/stats']">
+              <mat-icon matListIcon>bar_chart</mat-icon>
+              <span>مشاهده آمار</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/admin/notifications']">
+              <mat-icon matListIcon>notifications</mat-icon>
+              <span>ارسال اعلان</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/admin/settings']">
+              <mat-icon matListIcon>settings</mat-icon>
+              <span>تنظیمات سیستم</span>
+            </button>
+          </mat-list-item>
+        }
+        @if (userRole() === 'rescuer') {
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/rescuer/reports']">
+              <mat-icon matListIcon>assignment</mat-icon>
+              <span>مشاهده گزارش‌های فعال</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/rescuer/respond']">
+              <mat-icon matListIcon>comment</mat-icon>
+              <span>ثبت پاسخ به گزارش</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/rescuer/map']">
+              <mat-icon matListIcon>map</mat-icon>
+              <span>مشاهده نقشه</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/rescuer/profile']">
+              <mat-icon matListIcon>person</mat-icon>
+              <span>پروفایل امدادگر</span>
+            </button>
+          </mat-list-item>
+        }
+        @if (userRole() === 'user') {
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/report']">
+              <mat-icon matListIcon>report</mat-icon>
+              <span>ارسال گزارش جدید</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/user/reports']">
+              <mat-icon matListIcon>history</mat-icon>
+              <span>مشاهده گزارش‌های ارسالی</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/user/profile']">
+              <mat-icon matListIcon>edit</mat-icon>
+              <span>ویرایش پروفایل</span>
+            </button>
+          </mat-list-item>
+          <mat-list-item role="listitem">
+            <button mat-list-item [routerLink]="['/user/notifications']">
+              <mat-icon matListIcon>notifications</mat-icon>
+              <span>مشاهده اعلان‌ها</span>
+            </button>
+          </mat-list-item>
+        }
+        <mat-list-item role="listitem">
+          <button mat-list-item (click)="logout()">
+            <mat-icon matListIcon>logout</mat-icon>
+            <span>خروج</span>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </div>
+  }
+  <div class="header_nav_logo">
+    <img src="/assets/images/logo.png" alt="لوگو">
+  </div>
+</div>

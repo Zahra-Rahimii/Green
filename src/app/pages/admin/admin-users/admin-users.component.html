@@ -1,0 +1,96 @@
+<app-header></app-header>
+
+<div class="container" dir="rtl">
+  <h2>مدیریت کاربران</h2>
+
+  <!-- پیام‌های خطا و موفقیت -->
+  @if (errorMessage()) {
+    <p class="error">{{ errorMessage() }}</p>
+  }
+  @if (successMessage()) {
+    <p class="success">{{ successMessage() }}</p>
+  }
+
+  <!-- بخش جستجو و فیلتر -->
+  <div class="filter-section">
+    <input [(ngModel)]="searchQuery" (input)="filterUsers()" placeholder="جستجو بر اساس نام کاربری یا ایمیل" class="search-input" />
+    <select [(ngModel)]="filterRole" (change)="filterUsers()">
+      <option value="">همه نقش‌ها</option>
+      <option value="user">کاربر</option>
+      <option value="admin">ادمین</option>
+      <option value="rescuer">امدادگر</option>
+    </select>
+  </div>
+
+  <!-- انیمیشن لودینگ -->
+  @if (isLoading()) {
+    <div class="loading">در حال بارگذاری...</div>
+  }
+
+  <!-- جدول کاربران -->
+  <table class="users-table">
+    <thead>
+      <tr>
+        <th (click)="sortBy('username')">نام کاربری
+          <span class="sort-icon">{{ sortColumn === 'username' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</span>
+        </th>
+        <th (click)="sortBy('email')">ایمیل
+          <span class="sort-icon">{{ sortColumn === 'email' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</span>
+        </th>
+        <th>شماره تماس</th>
+        <th>نقش</th>
+        <th>وضعیت</th>
+        <th (click)="sortBy('createdAt')">تاریخ ثبت
+          <span class="sort-icon">{{ sortColumn === 'createdAt' ? (sortDirection === 'asc' ? '↑' : '↓') : '' }}</span>
+        </th>
+        <th>عملیات</th>
+      </tr>
+    </thead>
+    <tbody>
+      @if (filteredUsers().length > 0) {
+        @for (user of filteredUsers(); track user.id) {
+          <tr>
+            @if (editingUser() && editingUser()!.id === user.id) {
+              <td><input [(ngModel)]="editingUser()!.username" placeholder="نام کاربری" required /></td>
+              <td><input [(ngModel)]="editingUser()!.email" placeholder="ایمیل" type="email" required /></td>
+              <td><input [(ngModel)]="editingUser()!.phone" placeholder="شماره تماس" /></td>
+              <td>
+                <select [(ngModel)]="editingUser()!.role">
+                  <option value="user">کاربر</option>
+                  <option value="admin">ادمین</option>
+                  <option value="rescuer">امدادگر</option>
+                </select>
+              </td>
+              <td>
+                <select [(ngModel)]="editingUser()!.status">
+                  <option value="active">فعال</option>
+                  <option value="inactive">غیرفعال</option>
+                </select>
+              </td>
+              <td>{{ user.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</td>
+              <td>
+                <button class="save-btn" (click)="saveUser()">ذخیره</button>
+                <button class="cancel-btn" (click)="cancelEditing()">لغو</button>
+              </td>
+            } @else {
+              <td>{{ user.username }}</td>
+              <td>{{ user.email }}</td>
+              <td>{{ user.phone || '-' }}</td>
+              <td>{{ user.role === 'user' ? 'کاربر' : user.role === 'admin' ? 'ادمین' : 'امدادگر' }}</td>
+              <td>{{ user.status === 'active' ? 'فعال' : 'غیرفعال' }}</td>
+              <td>{{ user.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</td>
+              <td>
+                <button class="edit-btn" (click)="startEditing(user)">ویرایش</button>
+                <button class="delete-btn" (click)="deleteUser(user.id)">حذف</button>
+              </td>
+            }
+          </tr>
+        }
+      } @else {
+        <tr>
+          <td colspan="7" class="no-data">کاربری یافت نشد</td>
+        </tr>
+      }
+    </tbody>
+  </table>
+</div>

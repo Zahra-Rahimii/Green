@@ -1,0 +1,136 @@
+.home_container {
+  height: 100vh;
+  max-height: 100vh;
+  background-image: url(/assets/images/img1.png);
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+.home_body {
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 1rem;
+  color: white;
+  width: 80%;
+  height: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+
+}
+
+app-header {
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.home_body_text{
+display: flex;
+flex-direction: column;
+justify-content: center;
+align-items: center;
+text-align: center;
+}
+
+.home_body_text h1{
+color: #538D22 ;
+margin: 0 0 1.5rem 0;
+font-weight: 800;
+font-size: 2.8rem;
+line-height: 1.4;
+}
+
+.home_body_text p{
+margin: 0;
+line-height: 1.6;
+}
+
+.p1{
+  font-size: 1.1rem;
+  color: #AAD576;
+  margin-bottom: 0.5rem;
+}
+
+.p2{
+color: #AAD576;
+font-size: 1rem;
+}
+
+.home_body_btn {
+margin-top: 2rem;
+}
+
+.home_body_btn button{
+  border: 2px solid #AAD576;
+  border-radius: 14px;
+  -webkit-border-radius: 14px;
+  -moz-border-radius: 14px;
+  -ms-border-radius: 14px;
+  -o-border-radius: 14px;
+  margin-top: 1rem;
+  color: #fff;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.home_body_btn button:hover {
+  background-color: #73A942; 
+  color: #245501;
+  border-color: #AAD576;
+  transform: scale(1.05);
+}
+
+
+@media (max-width: 768px) {
+  .home_body {
+    width: 90%;
+    padding: 1.5rem;
+  }
+
+  .home_body_text h1 {
+    font-size: 2rem;
+  }
+
+  .p1 {
+    font-size: 0.95rem;
+  }
+
+  .p2 {
+    font-size: 0.9rem;
+  }
+
+  .home_body_btn button {
+    padding: 0.8rem 1.5rem;
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .home_body {
+    width: 80%;
+  }
+
+  .home_body_text h1 {
+    font-size: 1.6rem;
+  }
+
+  .p1 {
+    font-size: 0.85rem;
+  }
+
+  .p2 {
+    font-size: 0.8rem;
+  }
+
+  .home_body_btn button {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+}

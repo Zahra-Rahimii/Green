@@ -1,0 +1,90 @@
+<app-header></app-header>
+<div class="report-container">
+  @if (!selectedCategory()) {
+    <div class="categories_wrapper">
+    <h2>انتخاب دسته‌بندی</h2>
+    <div class="categories">
+      @for (category of categories; track category.id) {
+        <div class="category-card" (click)="selectCategory(category)">
+          <img [src]="category.image" alt="{{ category.label }}">
+          <p>{{ category.label }}</p>
+        </div>
+      }
+    </div>
+    </div>
+  } @else {
+    <div class="form_wrapper">
+    <h2>ثبت گزارش</h2>
+    <div class="form-container">
+      <form [formGroup]="reportForm" (ngSubmit)="onSubmit()">
+        <div class="form-group">
+          <label for="category">عنوان:</label>
+          <p class="category-label">{{ selectedCategory()?.label }}</p>
+          <input type="hidden" formControlName="category" [value]="selectedCategory()?.id">
+        </div>
+
+        <div class="form-group">
+          <label for="reporterName">نام گزارش‌دهنده:</label>
+          <input id="reporterName" formControlName="reporterName" placeholder="نام شما">
+          @if (reporterName?.invalid && reporterName?.touched) {
+            <div class="error">نام الزامی است و حداقل ۳ کاراکتر باشد.</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="phone">شماره تلفن:</label>
+          <input id="phone" formControlName="phone" placeholder="مثال: 09123456789">
+          @if (phone?.invalid && phone?.touched) {
+            <div class="error">شماره تلفن باید با فرمت ۰۹xxxxxxxx باشد.</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="description">توضیحات:</label>
+          <textarea id="description" formControlName="description" placeholder="توضیحات گزارش"></textarea>
+          @if (description?.invalid && description?.touched) {
+            <div class="error">توضیحات الزامی است و حداقل ۱۰ کاراکتر باشد.</div>
+          }
+        </div>
+
+        <div class="form-group">
+          <label for="address">آدرس:</label>
+          <input id="address" #addressInput formControlName="address" placeholder="آدرس محل حادثه">
+          <button type="button" (click)="searchAddress()" [disabled]="!address?.value">جستجوی آدرس</button>
+          @if (address?.invalid && address?.touched) {
+            <div class="error">آدرس الزامی است و حداقل ۵ کاراکتر باشد.</div>
+          }
+        </div>
+
+        <div class="form-group map-group">
+          <label>موقعیت جغرافیایی:</label>
+          <div #mapRef id="map" style="height: 300px; width: 100%;"></div>
+          <div class="coordinates">
+            <p>عرض جغرافیایی: {{ reportForm.get('latitude')?.value ?? 'انتخاب نشده' }}</p>
+            <p>طول جغرافیایی: {{ reportForm.get('longitude')?.value ?? 'انتخاب نشده' }}</p>
+          </div>
+          <button type="button" (click)="getUserLocation()">موقعیت من</button>
+          <button type="button" (click)="setManualLocation()">موقعیت رو دستی تنظیم کن</button>
+        </div>
+
+        <div class="form-group">
+          <label for="image">تصویر (اختیاری):</label>
+          <input id="image" type="file" (change)="onFileChange($event)" accept="image/*">
+          @if (imagePreview()) {
+            <img [src]="imagePreview()" alt="پیش‌نمایش تصویر" class="image-preview">
+          }
+        </div>
+
+        <button type="submit" [disabled]="!reportForm.valid || isLoading() || !isLocationSet()">ثبت گزارش</button>
+      </form>
+
+      @if (errorMessage()) {
+        <p class="error-message">{{ errorMessage() }}</p>
+      }
+      @if (successMessage()) {
+        <p class="success-message">{{ successMessage() }}</p>
+      }
+    </div>
+    </div>
+  }
+</div>
