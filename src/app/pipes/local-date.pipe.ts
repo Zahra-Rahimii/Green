@@ -10,8 +10,8 @@ export class LocalDatePipe implements PipeTransform {
 
   transform(value: string | Date, format: string = 'jYYYY-jMM-jDD HH:mm'): string {
     const date = new Date(value);
-    // تهران UTC+04:00 هست
-    const tehranOffset = 4 * 60; // 4 ساعت به دقیقه
+    // تنظیم منطقه زمانی تهران (UTC+03:30)
+    const tehranOffset = 3.5 * 60; // 3.5 ساعت به دقیقه
     const localOffset = date.getTimezoneOffset(); // افست محلی مرورگر
     const adjustedDate = new Date(date.getTime() + (tehranOffset + localOffset) * 60 * 1000);
 

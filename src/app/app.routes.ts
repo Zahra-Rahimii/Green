@@ -12,21 +12,48 @@ import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.compo
 import { RescuerReportDetailComponent } from './pages/rescuer/rescuer-report-detail/rescuer-report-detail.component';
 import { RescuerReportsComponent } from './pages/rescuer/rescuer-reports/rescuer-reports.component';
 
-
-
 export const routes: Routes = [
-  { path: '', component: HomeComponent }, // صفحه هوم
-  { path: 'report', component: ReportComponent }, // فرم گزارش
-  { path: 'login', component: LoginComponent }, // صفحه لاگین
-  { path: 'admin/reports', component: AdminReportsComponent, canActivate: [AuthGuard] }, // لیست گزارش‌ها (اختیاری، می‌تونی حذف کنی)
-  { path: 'admin/reports/:id', component: AdminReportDetailComponent, canActivate: [AuthGuard] },
-  { path: 'admin/login', component: LoginComponent },
-  { path: 'rescuer/reports', component: RescuerReportsComponent, canActivate: [AuthGuard] },
-  { path: 'rescuer/report/:id', component: RescuerReportDetailComponent, canActivate: [AuthGuard] },
-  { path: 'user', component: UserComponent }, // پنل کاربر
-  {path: 'register', component:RegisterComponent},
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  {path: 'admin-users',component: AdminUsersComponent},
-  { path: '**', redirectTo: '' }, // مسیرهای نامعتبر
-
+  { path: '', component: HomeComponent }, // صفحه هوم (بدون گارد، عمومیه)
+  { path: 'report', component: ReportComponent }, // فرم گزارش (بدون گارد، عمومیه)
+  { path: 'login', component: LoginComponent }, // صفحه لاگین (بدون گارد)
+  {
+    path: 'admin/reports',
+    component: AdminReportsComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
+  },
+  {
+    path: 'admin/reports/:id',
+    component: AdminReportDetailComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
+  },
+  { path: 'admin/login', component: LoginComponent }, // مسیر جداگانه برای ادمین (بدون گارد)
+  {
+    path: 'rescuer/reports',
+    component: RescuerReportsComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'rescuer' }
+  },
+  {
+    path: 'rescuer/report/:id',
+    component: RescuerReportDetailComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'rescuer' }
+  },
+  {
+    path: 'user',
+    component: UserComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'user' }
+  },
+  { path: 'register', component: RegisterComponent }, // صفحه ثبت‌نام (بدون گارد)
+  { path: 'forgot-password', component: ForgotPasswordComponent }, // صفحه فراموشی رمز (بدون گارد)
+  {
+    path: 'admin-users',
+    component: AdminUsersComponent,
+    canActivate: [AuthGuard],
+    data: { role: 'admin' }
+  },
+  { path: '**', redirectTo: '' } // مسیرهای نامعتبر
 ];
