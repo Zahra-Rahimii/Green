@@ -1,5 +1,16 @@
+/* تنظیمات عمومی برای جلوگیری از اسکرول افقی */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  overflow-x: hidden;
+  margin: 0;
+}
+
+/* استایل‌های پایه برای دسکتاپ (بدون تغییر) */
 .report-container {
-  width: 700px;
+  /* width: 700px; */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -10,7 +21,7 @@
   margin: 2rem auto;
 }
 
-.form_wrapper{
+.form_wrapper {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
   width: min(80%, 700px);
   border-radius: 1rem;
@@ -102,22 +113,6 @@ input.invalid, textarea.invalid {
   opacity: 0.7;
 }
 
-.form-group:has(#reporterName)::before {
-  background-image: url('/assets/icons/user-icon.svg');
-}
-
-.form-group:has(#phone)::before {
-  background-image: url('/assets/icons/phone-icon.svg');
-}
-
-.form-group:has(#description)::before {
-  background-image: url('/assets/icons/description-icon.svg');
-}
-
-.form-group:has(#address)::before {
-  background-image: url('/assets/icons/address-icon.svg');
-}
-
 .error {
   min-height: 1rem;
   color: #ff4d4d;
@@ -150,8 +145,8 @@ button[type="submit"], button[type="button"] {
 }
 
 button[type="button"] {
-  width: 40%;
-  margin: 0.4rem 0.2rem;
+  width: max-content;
+  margin: 1rem 0.2rem;
 }
 
 button:hover {
@@ -170,20 +165,32 @@ button:disabled {
 .map-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   gap: 0.5rem;
 }
 
 .coordinates {
   display: flex;
-  justify-content: space-between;
-  width: 80%;
-  margin: 0.5rem 0;
+  flex-direction: column;
+  align-items: start;
+  width: 100%;
 }
 
 .coordinates p {
+  line-height: 0.5rem;
   font-size: 0.9rem;
   color: rgba(255, 255, 255, 0.9);
+}
+
+.map_btn {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.map_btn button {
+  width: max-content;
+  margin: 1rem 0;
 }
 
 .image-preview {
@@ -206,15 +213,15 @@ button:disabled {
   margin-top: 0.5rem;
 }
 
-.categories_wrapper{
+.categories_wrapper {
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-    border-radius: 1rem;
+  border-radius: 1rem;
   -webkit-border-radius: 1rem;
   -moz-border-radius: 1rem;
   -ms-border-radius: 1rem;
   -o-border-radius: 1rem;
-    padding: 2rem;
+  padding: 2rem;
 }
 
 .categories {
@@ -231,6 +238,10 @@ button:disabled {
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1 1 250px;
+  min-width: 150px;
+  max-width: 250px;
+  
 }
 
 .category-card:hover {
@@ -239,9 +250,11 @@ button:disabled {
 }
 
 .category-card img {
-  width: 150px;
-  height: 200px;
+  max-width: 150px;
+  height: 200px; /* ارتفاع ثابت برای دسکتاپ */
+  object-fit: cover; /* برش تصویر برای پر کردن کادر */
   border-radius: 0.3rem;
+  width: 100%;
 }
 
 .category-card p {
@@ -250,39 +263,46 @@ button:disabled {
   color: white;
 }
 
-@media (max-width: 600px) {
-  .form-container {
-    width: 90%;
-    padding: 1.2rem;
+/* مدیا کوئری برای تبلت‌ها (تا 768px) */
+@media only screen and (max-width: 768px) {
+  .report-container {
+    padding: 1rem;
   }
 
-  h2 {
-    font-size: 1.5rem;
-    margin: 0.6rem 0;
+  .categories_wrapper {
+    padding: 1rem;
   }
 
-  button[type="submit"], button[type="button"] {
-    width: 85%;
-    font-size: 0.9rem;
-    padding: 0.6rem 0.8rem;
+  .categories {
+    gap: 1rem;
   }
 
-  button[type="button"] {
-    width: 45%;
+  .category-card {
+    flex: 1 1 45%;
+    min-width: 140px;
+    max-width: 200px;
   }
 
-  input, textarea {
-    padding: 0.5rem 0.5rem 0.5rem 2.5rem;
-    font-size: 0.9rem;
+  .category-card img {
+    max-width: 100%;
+    height: 180px; /* ارتفاع کمی کوچک‌تر برای تبلت */
+    object-fit: cover;
   }
 
-  .error {
-    font-size: 0.75rem;
-    margin-top: 0.1rem;
+  .category-card p {
+    font-size: 0.85rem;
+  }
+}
+
+/* مدیا کوئری برای موبایل‌ها (تا 480px) */
+@media only screen and (max-width: 480px) {
+  .report-container {
+    padding: 0.5rem;
+    margin: 0.5rem auto;
   }
 
-  .category-label {
-    font-size: 0.9rem;
+  .categories_wrapper {
+    padding: 0.8rem;
   }
 
   .categories {
@@ -290,10 +310,45 @@ button:disabled {
   }
 
   .category-card {
-    padding: 0.8rem;
+    flex: 1 1 45%;
+    min-width: 120px;
+    max-width: 160px;
   }
 
   .category-card img {
-    max-width: 80px;
+    max-width: 100%;
+    height: 160px; /* ارتفاع کوچک‌تر برای موبایل */
+    object-fit: cover;
+  }
+
+  .category-card p {
+    font-size: 0.8rem;
+  }
+}
+
+/* مدیا کوئری برای موبایل‌های خیلی کوچک (تا 360px) */
+@media only screen and (max-width: 360px) {
+  .categories_wrapper {
+    padding: 0.5rem;
+  }
+
+  .categories {
+    gap: 0.5rem;
+  }
+
+  .category-card {
+    flex: 1 1 100%;
+    min-width: 0;
+    max-width: 100%;
+  }
+
+  .category-card img {
+    max-width: 100%;
+    height: 150px; /* ارتفاع کوچک‌تر برای موبایل‌های خیلی کوچک */
+    object-fit: cover;
+  }
+
+  .category-card p {
+    font-size: 0.75rem;
   }
 }

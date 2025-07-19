@@ -11,6 +11,7 @@ import { ForgotPasswordComponent } from './pages/forgot-password/forgot-password
 import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.component';
 import { RescuerReportDetailComponent } from './pages/rescuer/rescuer-report-detail/rescuer-report-detail.component';
 import { RescuerReportsComponent } from './pages/rescuer/rescuer-reports/rescuer-reports.component';
+import { RescuerMapComponent } from './pages/rescuer/rescuer-map/rescuer-map.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // صفحه هوم (بدون گارد، عمومیه)
@@ -40,6 +41,10 @@ export const routes: Routes = [
     component: RescuerReportDetailComponent,
     canActivate: [AuthGuard],
     data: { role: 'rescuer' }
+  },
+  {
+    path: 'rescuer/map',
+    component: RescuerMapComponent,
   },
   {
     path: 'user',

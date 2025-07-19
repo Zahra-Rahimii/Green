@@ -7,10 +7,11 @@ import { AuthService } from '../../../services/auth.service';
 import { RouterModule, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { LocalDatePipe } from '../../../pipes/local-date.pipe';
+import { HeaderComponent } from "../../../components/shared/header/header.component";
 
 @Component({
   selector: 'app-rescuer-reports',
-  imports: [CommonModule, RouterModule, LocalDatePipe],
+  imports: [CommonModule, RouterModule, LocalDatePipe, HeaderComponent],
   standalone: true,
   templateUrl: './rescuer-reports.component.html',
   styleUrl: './rescuer-reports.component.css'

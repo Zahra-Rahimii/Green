@@ -7,6 +7,7 @@ import { AuthService } from '../../../services/auth.service';
 import { CommonModule } from '@angular/common';
 import { LocalDatePipe } from '../../../pipes/local-date.pipe';
 import * as L from 'leaflet';
+import { HeaderComponent } from "../../../components/shared/header/header.component";
 
 interface Category {
   id: string;
@@ -16,7 +17,7 @@ interface Category {
 @Component({
   selector: 'app-rescuer-report-detail',
   standalone: true,
-  imports: [CommonModule, LocalDatePipe],
+  imports: [CommonModule, LocalDatePipe, HeaderComponent],
   templateUrl: './rescuer-report-detail.component.html',
   styleUrl: './rescuer-report-detail.component.css'
 })
