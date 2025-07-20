@@ -83,8 +83,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
   private initializeMap(): void {
     if (this.mapRef && !this.map) {
       const mapElement = this.mapRef.nativeElement;
-      console.log('Initializing map on element:', mapElement);
-
       this.map = L.map(mapElement, {
         zoomControl: true
       }).setView([35.7, 51.4], 10);
@@ -114,7 +112,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
       const handler: L.LeafletEventHandlerFn = (event: L.LeafletEvent) => {
         if ('latlng' in event && (event as L.LeafletMouseEvent).latlng) {
           const { lat, lng } = (event as L.LeafletMouseEvent).latlng;
-          console.log('Map tapped/clicked at:', lat, lng);
           this.reportForm.patchValue({ latitude: lat, longitude: lng });
           this.locationSet.set(true);
           if (this.marker) {
@@ -134,7 +131,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         (position) => {
           const lat = position.coords.latitude;
           const lng = position.coords.longitude;
-          console.log('User location detected:', lat, lng);
           this.reportForm.patchValue({ latitude: lat, longitude: lng });
           this.locationSet.set(true);
           if (this.map) {
@@ -157,7 +153,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         },
         (error) => {
           this.errorMessage.set('موقعیت خودکار تشخیص داده نشد. لطفاً GPS رو فعال کن یا با کلیک روی نقشه موقعیت رو دستی تنظیم کن.');
-          console.error('Geolocation error:', error);
           this.locationSet.set(false);
         },
         { enableHighAccuracy: true, timeout: 10000, maximumAge: 0 }
@@ -245,10 +240,8 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
         createdAt: new Date().toISOString(), // مقدار پیش‌فرض برای createdAt
         updatedAt: null
       };
-      console.log('Submitting report:', report); // دیباگ برای چک کردن category
       this.reportService.addReport(report).subscribe({
         next: (response: Report) => {
-          console.log('Report created:', response);
           this.isLoading.set(false);
           this.successMessage.set('گزارش با موفقیت ثبت شد!');
           setTimeout(() => {
@@ -264,7 +257,6 @@ export class ReportComponent implements AfterViewInit, OnDestroy {
           }, 2000);
         },
         error: (err: unknown) => {
-          console.error('Error creating report:', err);
           this.isLoading.set(false);
           this.errorMessage.set((err as Error).message || 'خطا در ثبت گزارش.');
         }

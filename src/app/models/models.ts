@@ -24,6 +24,7 @@ export interface User {
 export  interface UserProfile{
   id: string;
   username: string;
+  fullName?: string | null;
   email: string;
   phone?: string;
   role: 'admin' | 'rescuer' | 'user';

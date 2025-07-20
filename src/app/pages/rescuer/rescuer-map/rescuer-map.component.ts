@@ -6,11 +6,12 @@ import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { Observable } from 'rxjs';
+import { HeaderComponent } from "../../../components/shared/header/header.component";
 
 @Component({
   selector: 'app-rescuer-map',
   standalone: true,
-  imports: [FormsModule],
+  imports: [FormsModule, HeaderComponent],
   templateUrl: './rescuer-map.component.html',
   styleUrl: './rescuer-map.component.css'
 })
@@ -20,7 +21,6 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
   private markers: L.Marker[] = [];
   private routes: L.Polyline[] = [];
   @ViewChild('mapRef') mapRef?: ElementRef;
-  filterDate: string = ''; // برای فیلتر تاریخ
 
   constructor(
     private reportService: ReportService,
@@ -28,27 +28,22 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
     private router: Router
   ) {
     this.reports$ = this.reportService.getReports();
-    console.log('Component constructed'); // دیباگ
   }
 
   ngOnInit() {
     const user = this.authService.userState();
-    console.log('ngOnInit - User:', user); // دیباگ
     if (!user.isLoggedIn || !this.authService.hasRole('rescuer')) {
       this.router.navigate(['/login']);
     }
   }
 
   ngAfterViewInit() {
-    console.log('ngAfterViewInit - Starting map load'); // دیباگ
     this.reports$.subscribe(reports => {
       const user = this.authService.userState();
-      console.log('Reports loaded for user:', user.username, reports); // دیباگ
       if (this.mapRef && user.username) {
         const filteredReports = reports.filter(report => 
           report.assignedTo === user.username && report.status === 'in_review'
         );
-        console.log('Filtered reports for user (in_review):', user.username, filteredReports); // دیباگ
         if (filteredReports.length === 0) {
           console.warn('No in_review reports assigned to this rescuer:', user.username);
         }
@@ -57,7 +52,6 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
         console.error('mapRef or username is undefined:', this.mapRef, user.username);
       }
     }, error => {
-      console.error('Error loading reports:', error); // دیباگ برای خطاها
     });
   }
 
@@ -65,8 +59,6 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
     if (this.mapRef && !this.map) {
       const mapElement = this.mapRef.nativeElement;
       this.map = L.map(mapElement).setView([35.6892, 51.3890], 6); // مختصات پیش‌فرض
-      console.log('Map initialized:', this.map); // دیباگ
-
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         attribution: '© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
       }).addTo(this.map);
@@ -89,7 +81,6 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
 
       reports.forEach(report => {
         if (report.latitude && report.longitude) {
-          console.log('Adding marker for report:', report.title, [report.latitude, report.longitude]); // دیباگ
           const categoryColor = categoryColors[report.category || 'other'] || '#7F8C8D';
           const customIcon = L.divIcon({
             className: 'custom-marker',
@@ -106,8 +97,6 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
               <small>دسته‌بندی: ${report.category || 'نامشخص'}</small>
             `);
           this.markers.push(marker);
-          console.log('Marker added:', marker); // دیباگ برای چک مارکر
-
           const rescuerLocation = L.latLng(35.6892, 51.3890); // مختصات فرضی امدادگر
           const route = L.polyline([rescuerLocation, L.latLng(report.latitude!, report.longitude)], {
             color: '#FF4500',
@@ -120,23 +109,8 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
         }
       });
     } else if (this.map) {
-      console.log('Map already initialized, skipping:', this.map); // دیباگ
     } else {
       console.error('mapRef or map is undefined in initializeMap');
     }
-  }
-
-  applyFilter() {
-    this.reports$.subscribe(reports => {
-      const user = this.authService.userState();
-      if (this.mapRef && user.username) {
-        const filteredReports = reports.filter(report => 
-          report.assignedTo === user.username && 
-          report.status === 'in_review' && 
-          (!this.filterDate || new Date(report.createdAt!).toLocaleDateString('fa-IR') === this.filterDate)
-        );
-        this.initializeMap(filteredReports); // به‌روزرسانی نقشه با گزارش‌های فیلترشده
-      }
-    });
   }
 } 

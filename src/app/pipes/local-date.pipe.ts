@@ -8,7 +8,8 @@ import jalaliMoment from 'jalali-moment';
 export class LocalDatePipe implements PipeTransform {
   private persianNumbers = ['۰', '۱', '۲', '۳', '۴', '۵', '۶', '۷', '۸', '۹'];
 
-  transform(value: string | Date, format: string = 'jYYYY-jMM-jDD HH:mm'): string {
+  transform(value: string | Date | undefined, format: string = 'jYYYY-jMM-jDD dddd HH:mm'): string {
+    if (!value) return 'تاریخ ثبت نشده'; // مدیریت undefined یا null
     const date = new Date(value);
     // تنظیم منطقه زمانی تهران (UTC+03:30)
     const tehranOffset = 3.5 * 60; // 3.5 ساعت به دقیقه

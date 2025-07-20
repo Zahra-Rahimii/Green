@@ -15,6 +15,7 @@ h2{
   height: 600px !important;
   width: 100% !important;
   position: relative !important;
+  border: 1px solid #75A95F;
 }
 
 .custom-marker {
@@ -23,28 +24,29 @@ h2{
 }
 
 .legend {
+  display: flex;
   margin-top: 10px;
   padding: 10px;
-  background-color: #f9f9f9;
-  border: 1px solid #ddd;
+  border: 1px solid #75A95F;
   border-radius: 5px;
-}
-
-.legend h3 {
-  margin: 0 0 10px 0;
-  font-size: 16px;
+  backdrop-filter: blur(8px);
 }
 
 .legend div {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 
 .color-box {
   width: 15px;
   height: 15px;
-  margin-right: 10px;
+  margin:0 10px 0 8px;
   border: 1px solid #ccc;
-  border-radius: 3px;
+  border-radius: 10px;
+  -webkit-border-radius: 10px;
+  -moz-border-radius: 10px;
+  -ms-border-radius: 10px;
+  -o-border-radius: 10px;
 }

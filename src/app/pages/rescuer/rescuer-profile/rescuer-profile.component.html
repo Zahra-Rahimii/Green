@@ -1,29 +1,44 @@
-<app-header></app-header>
+<!-- <app-header></app-header>
 <div class="rescuer-profile">
   <h2>پروفایل امدادگر</h2>
   <div *ngIf="isLoading()" class="loading">در حال بارگذاری...</div>
   <div *ngIf="user() && !isLoading()">
     <h3>اطلاعات شخصی</h3>
     <div *ngIf="!isEditing()">
-      <p>نام کاربری: {{ user().username }}</p>
-      <p>نام کامل: {{ user().fullName || 'نامشخص' }}</p>
-      <p>ایمیل: {{ user().email || 'نامشخص' }}</p>
-      <p>شماره تماس: {{ user().phone || 'نامشخص' }}</p>
-      <p>تاریخ عضویت: {{ user().createdAt | localDate }}</p>
+      <p>نام کاربری: {{ user()?.username }}</p>
+      <p>نام کامل: {{ user()?.fullName || 'نامشخص' }}</p>
+      <p>ایمیل: {{ user()?.email || 'نامشخص' }}</p>
+      <p>شماره تماس: {{ user()?.phone || 'نامشخص' }}</p>
+      <p>تاریخ عضویت: {{ user()?.createdAt ? (user()?.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm') : 'تاریخ ثبت نشده' }}</p>
       <button (click)="toggleEdit()">ویرایش اطلاعات</button>
       <button (click)="logout()">خروج</button>
     </div>
     <div *ngIf="isEditing()">
-      <input id="fullName" [value]="user().fullName || ''" placeholder="نام کامل" />
-      <input id="email" [value]="user().email || ''" placeholder="ایمیل" />
-      <input id="phone" [value]="user().phone || ''" placeholder="شماره تماس" />
-      <input id="newPassword" type="password" placeholder="رمز عبور جدید" />
-      <input id="confirmPassword" type="password" placeholder="تأیید رمز عبور" />
-      <button (click)="saveProfile()">ذخیره</button>
-      <button (click)="toggleEdit()">لغو</button>
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <div>
+          <input id="fullName" formControlName="fullName" placeholder="نام کامل" />
+        </div>
+        <div>
+          <input id="email" formControlName="email" placeholder="ایمیل" (focus)="checkEmail()" (blur)="checkEmail()" />
+          <div *ngIf="emailError()" class="error-message">{{ emailError() }}</div>
+        </div>
+        <div>
+          <input id="phone" formControlName="phone" placeholder="شماره تماس" (focus)="checkPhone()" (blur)="checkPhone()" />
+          <div *ngIf="phoneError()" class="error-message">{{ phoneError() }}</div>
+        </div>
+        <div>
+          <input id="newPassword" formControlName="newPassword" type="password" placeholder="رمز عبور جدید" (focus)="checkPassword()" (blur)="checkPassword()" />
+          <div *ngIf="passwordError()" class="error-message">{{ passwordError() }}</div>
+        </div>
+        <div>
+          <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="تأیید رمز عبور" (focus)="checkPassword()" (blur)="checkPassword()" />
+          <div *ngIf="passwordError()" class="error-message">{{ passwordError() }}</div>
+        </div>
+        <button type="submit" [disabled]="profileForm.invalid">ذخیره</button>
+        <button type="button" (click)="toggleEdit()">لغو</button>
+      </form>
     </div>
 
-    <!-- نمایش پیغام با استفاده از optional chaining -->
     <div *ngIf="message()" [ngClass]="{'error-message': message()?.isError, 'success-message': !message()?.isError}">
       {{ message()?.text }}
     </div>
@@ -34,4 +49,67 @@
     <p>گزارش‌های رسیدگی‌شده: {{ reportStats().reviewed }}</p>
     <p>گزارش‌های ردشده: {{ reportStats().rejected }}</p>
   </div>
+</div> -->
+
+<app-header></app-header>
+<div class="rescuer-profile">
+  <h2>پروفایل امدادگر</h2>
+  @if (isLoading()) {
+    <div class="loading">در حال بارگذاری...</div>
+  } @else if (user()) {
+    <h3>اطلاعات شخصی</h3>
+    @if (!isEditing()) {
+      <p>نام کاربری: {{ user()?.username }}</p>
+      <p>نام کامل: {{ user()?.fullName || 'نامشخص' }}</p>
+      <p>ایمیل: {{ user()?.email || 'نامشخص' }}</p>
+      <p>شماره تماس: {{ user()?.phone || 'نامشخص' }}</p>
+      <p>تاریخ عضویت: {{ user()?.createdAt ? (user()?.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm') : 'تاریخ ثبت نشده' }}</p>
+      <button (click)="toggleEdit()">ویرایش اطلاعات</button>
+      <button (click)="logout()">خروج</button>
+    } @else {
+      <form [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <div>
+          <input id="fullName" formControlName="fullName" placeholder="نام کامل" />
+        </div>
+        <div>
+          <input id="email" formControlName="email" placeholder="ایمیل" (focus)="checkEmail()" (blur)="checkEmail()" />
+          @if (emailError()) {
+            <div class="error-message">{{ emailError() }}</div>
+          }
+        </div>
+        <div>
+          <input id="phone" formControlName="phone" placeholder="شماره تماس" (focus)="checkPhone()" (blur)="checkPhone()" />
+          @if (phoneError()) {
+            <div class="error-message">{{ phoneError() }}</div>
+          }
+        </div>
+        <div>
+          <input id="newPassword" formControlName="newPassword" type="password" placeholder="رمز عبور جدید" (focus)="checkPassword()" (blur)="checkPassword()" />
+          @if (passwordError()) {
+            <div class="error-message">{{ passwordError() }}</div>
+          }
+        </div>
+        <div>
+          <input id="confirmPassword" formControlName="confirmPassword" type="password" placeholder="تأیید رمز عبور" (focus)="checkPassword()" (blur)="checkPassword()" />
+          @if (passwordError()) {
+            <div class="error-message">{{ passwordError() }}</div>
+          }
+        </div>
+        <button type="submit" [disabled]="profileForm.invalid">ذخیره</button>
+        <button type="button" (click)="toggleEdit()">لغو</button>
+      </form>
+    }
+
+    @if (message()) {
+      <div [ngClass]="{'error-message': message()?.isError, 'success-message': !message()?.isError}">
+        {{ message()?.text }}
+      </div>
+    }
+
+    <h3>وضعیت فعالیت</h3>
+    <p>همه گزارش ها: {{ reportStats().all }}</p>
+    <p>گزارش‌های در حال بررسی: {{ reportStats().in_review }}</p>
+    <p>گزارش‌های رسیدگی‌شده: {{ reportStats().reviewed }}</p>
+    <p>گزارش‌های ردشده: {{ reportStats().rejected }}</p>
+  }
 </div>

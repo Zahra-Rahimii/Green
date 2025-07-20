@@ -36,7 +36,13 @@ export class AdminUsersComponent implements OnInit {
     this.isLoading.set(true);
     this.userService.getUsers().subscribe({
       next: (users) => {
-        this.users.set(users);
+        const updatedUsers = users.map(user => {
+          if (!user.createdAt) {
+            user.createdAt = new Date().toISOString(); // پیش‌فرض اگه createdAt نباشه
+          }
+          return user;
+        });
+        this.users.set(updatedUsers);
         this.filterUsers();
         this.isLoading.set(false);
       },
@@ -90,6 +96,9 @@ export class AdminUsersComponent implements OnInit {
   saveUser() {
     const user = this.editingUser();
     if (user) {
+      if (!user.createdAt) {
+        user.createdAt = new Date().toISOString(); // پیش‌فرض اگه createdAt نباشه
+      }
       this.userService.updateUser(user.id, user).subscribe({
         next: (updatedUser) => {
           this.loadUsers();

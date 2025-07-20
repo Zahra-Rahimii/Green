@@ -1,15 +1,13 @@
+<app-header></app-header>
 <div class="rescuer-map">
   <h2>نقشه گزارش‌ها</h2>
-  <input type="date" [(ngModel)]="filterDate" (change)="applyFilter()" placeholder="فیلتر بر اساس تاریخ" />
   <div #mapRef id="map" style="height: 600px; width: 100%; position: relative;"></div>
   <!-- راهنما (لِجند) برای رنگ‌ها -->
   <div class="legend">
-    <h3>راهنما رنگ‌ها:</h3>
     <div><span class="color-box" style="background-color: #FF5733;"></span> آتش‌سوزی جنگل</div>
     <div><span class="color-box" style="background-color: #3498DB;"></span> آلودگی آب</div>
     <div><span class="color-box" style="background-color: #E74C3C;"></span> قطع غیرمجاز درختان</div>
     <div><span class="color-box" style="background-color: #F1C40F;"></span> شکار غیرمجاز</div>
     <div><span class="color-box" style="background-color: #9B59B6;"></span> تخریب زیستگاه</div>
     <div><span class="color-box" style="background-color: #7F8C8D;"></span> سایر</div>
-  </div>
 </div>

@@ -19,7 +19,6 @@ export class ReportService {
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith('report_')) {
           const reportData = JSON.parse(localStorage.getItem(key)!);
-          console.log('Loaded Report Data:', reportData); // دیباگ
           reports.push({
             id: key.replace('report_', ''),
             title: reportData.title || 'بدون عنوان',
