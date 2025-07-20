@@ -3,6 +3,7 @@ export interface RegisterRequest {
   email: string;
   password: string;
   role?: 'user'; 
+  phone?: string; 
 }
 
 export interface RegisterResponse {

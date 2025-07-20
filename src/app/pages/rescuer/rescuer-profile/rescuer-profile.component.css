@@ -1,0 +1,97 @@
+.rescuer-profile {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}
+
+.rescuer-profile h2 {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.rescuer-profile h3 {
+  color: #2e7d32;
+  margin-top: 20px;
+  border-bottom: 1px solid #66bb6a;
+  padding-bottom: 5px;
+}
+
+.rescuer-profile p {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  border-left: 4px solid #66bb6a;
+}
+
+.rescuer-profile strong {
+  color: #1b5e20;
+  margin-right: 10px;
+}
+
+.rescuer-profile input {
+  margin: 5px 0;
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.rescuer-profile button {
+  background-color: #66bb6a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px 10px 0;
+}
+
+.rescuer-profile button:hover {
+  background-color: #43a047;
+}
+
+.rescuer-profile .loading {
+  text-align: center;
+  padding: 20px;
+  color: #95a5a6;
+  font-style: italic;
+}
+
+.error-message {
+  color: #d32f2f;
+  background-color: #ffebee;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+.success-message {
+  color: #2e7d32;
+  background-color: #e8f5e9;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .rescuer-profile {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .rescuer-profile button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .rescuer-profile input {
+    width: 100%;
+  }
+}

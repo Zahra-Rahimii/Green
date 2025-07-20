@@ -12,6 +12,7 @@ import { AdminUsersComponent } from './pages/admin/admin-users/admin-users.compo
 import { RescuerReportDetailComponent } from './pages/rescuer/rescuer-report-detail/rescuer-report-detail.component';
 import { RescuerReportsComponent } from './pages/rescuer/rescuer-reports/rescuer-reports.component';
 import { RescuerMapComponent } from './pages/rescuer/rescuer-map/rescuer-map.component';
+import { RescuerProfileComponent } from './pages/rescuer/rescuer-profile/rescuer-profile.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // صفحه هوم (بدون گارد، عمومیه)
@@ -45,6 +46,10 @@ export const routes: Routes = [
   {
     path: 'rescuer/map',
     component: RescuerMapComponent,
+  },
+  {
+    path: 'rescuer/profile',
+    component: RescuerProfileComponent
   },
   {
     path: 'user',

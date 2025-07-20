@@ -1,0 +1,37 @@
+<app-header></app-header>
+<div class="rescuer-profile">
+  <h2>پروفایل امدادگر</h2>
+  <div *ngIf="isLoading()" class="loading">در حال بارگذاری...</div>
+  <div *ngIf="user() && !isLoading()">
+    <h3>اطلاعات شخصی</h3>
+    <div *ngIf="!isEditing()">
+      <p>نام کاربری: {{ user().username }}</p>
+      <p>نام کامل: {{ user().fullName || 'نامشخص' }}</p>
+      <p>ایمیل: {{ user().email || 'نامشخص' }}</p>
+      <p>شماره تماس: {{ user().phone || 'نامشخص' }}</p>
+      <p>تاریخ عضویت: {{ user().createdAt | localDate }}</p>
+      <button (click)="toggleEdit()">ویرایش اطلاعات</button>
+      <button (click)="logout()">خروج</button>
+    </div>
+    <div *ngIf="isEditing()">
+      <input id="fullName" [value]="user().fullName || ''" placeholder="نام کامل" />
+      <input id="email" [value]="user().email || ''" placeholder="ایمیل" />
+      <input id="phone" [value]="user().phone || ''" placeholder="شماره تماس" />
+      <input id="newPassword" type="password" placeholder="رمز عبور جدید" />
+      <input id="confirmPassword" type="password" placeholder="تأیید رمز عبور" />
+      <button (click)="saveProfile()">ذخیره</button>
+      <button (click)="toggleEdit()">لغو</button>
+    </div>
+
+    <!-- نمایش پیغام با استفاده از optional chaining -->
+    <div *ngIf="message()" [ngClass]="{'error-message': message()?.isError, 'success-message': !message()?.isError}">
+      {{ message()?.text }}
+    </div>
+
+    <h3>وضعیت فعالیت</h3>
+    <p>همه گزارش ها: {{ reportStats().all }}</p>
+    <p>گزارش‌های در حال بررسی: {{ reportStats().in_review }}</p>
+    <p>گزارش‌های رسیدگی‌شده: {{ reportStats().reviewed }}</p>
+    <p>گزارش‌های ردشده: {{ reportStats().rejected }}</p>
+  </div>
+</div>

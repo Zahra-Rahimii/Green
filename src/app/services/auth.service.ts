@@ -86,7 +86,7 @@ export class AuthService {
       id: '',
       username: credentials.username,
       email: credentials.email,
-      phone: '',
+      phone: credentials.phone || '',
       role: credentials.role || 'user',
       status: 'active',
       createdAt: new Date().toISOString(),
@@ -117,12 +117,11 @@ export class AuthService {
   }
 
   login(credentials: LoginRequest): Observable<LoginResponse> {
-    this.userService.syncUsers(); // همگام‌سازی قبل از لاگین
+    this.userService.syncUsers();
     const normalizedUsername = credentials.username.toLowerCase();
     let userData: string | null = null;
     let userKey: string | null = null;
 
-    // جستجو در کلیدهای localStorage برای یافتن کاربر
     Object.keys(localStorage).some(key => {
       if (key.startsWith('user_')) {
         const storedUser = JSON.parse(localStorage.getItem(key)!);
@@ -187,5 +186,117 @@ export class AuthService {
 
   hasRole(role: 'admin' | 'rescuer' | 'user'): boolean {
     return this.user().role === role;
+  }
+
+  changePassword(newPassword: string): Observable<any> {
+    const username = this.user().username;
+    if (!username) {
+      return throwError(() => new Error('کاربر وارد نشده است'));
+    }
+
+    let userData: string | null = null;
+    let userKey: string | null = null;
+    Object.keys(localStorage).some(key => {
+      if (key.startsWith('user_')) {
+        const storedUser = JSON.parse(localStorage.getItem(key)!);
+        if (storedUser.username.toLowerCase() === username.toLowerCase()) {
+          userData = localStorage.getItem(key);
+          userKey = key;
+          return true;
+        }
+      }
+      return false;
+    });
+
+    if (!userData || !userKey) {
+      return throwError(() => new Error('کاربر یافت نشد'));
+    }
+
+    const user = JSON.parse(userData);
+    user.password = newPassword;
+    try {
+      localStorage.setItem(userKey, JSON.stringify(user));
+      return of({ message: 'رمز عبور با موفقیت تغییر کرد', status: true });
+    } catch (error) {
+      return throwError(() => new Error('خطا در تغییر رمز'));
+    }
+  }
+
+  updateProfile(updatedUser: Partial<UserProfile>): Observable<any> {
+    const username = this.user().username;
+    if (!username) {
+      return throwError(() => new Error('کاربر وارد نشده است'));
+    }
+
+    let userData: string | null = null;
+    let userKey: string | null = null;
+    Object.keys(localStorage).some(key => {
+      if (key.startsWith('user_')) {
+        const storedUser = JSON.parse(localStorage.getItem(key)!);
+        if (storedUser.username.toLowerCase() === username.toLowerCase()) {
+          userData = localStorage.getItem(key);
+          userKey = key;
+          return true;
+        }
+      }
+      return false;
+    });
+
+    if (!userData || !userKey) {
+      return throwError(() => new Error('کاربر یافت نشد'));
+    }
+
+    const user = JSON.parse(userData);
+    const newEmail = updatedUser.email;
+    let shouldCheckEmail = false;
+
+    // فقط اگه ایمیل جدید وجود داره و با ایمیل فعلی فرق داره، چک کن
+    if (newEmail && newEmail !== user.email) {
+      shouldCheckEmail = true;
+    }
+
+    if (shouldCheckEmail) {
+      const existingEmail = Object.keys(localStorage).some(key => {
+        if (key.startsWith('user_') && key !== userKey) {
+          const storedUser = JSON.parse(localStorage.getItem(key)!);
+          return storedUser.email === newEmail;
+        }
+        return false;
+      });
+
+      if (existingEmail) {
+        return throwError(() => new Error('ایمیل قبلاً ثبت شده است.'));
+      }
+    }
+
+    const updatedProfile: UserProfile = { ...user, ...updatedUser, updatedAt: new Date().toISOString() };
+    try {
+      localStorage.setItem(userKey, JSON.stringify(updatedProfile));
+      this.userService.syncUsers();
+      return of({ message: 'پروفایل با موفقیت به‌روزرسانی شد', status: true });
+    } catch (error) {
+      return throwError(() => new Error('خطا در به‌روزرسانی پروفایل'));
+    }
+  }
+
+  getUserProfile(): Observable<UserProfile | null> {
+    const username = this.user().username;
+    if (!username) {
+      return of(null);
+    }
+
+    let userData: string | null = null;
+    Object.keys(localStorage).some(key => {
+      if (key.startsWith('user_')) {
+        const storedUser = JSON.parse(localStorage.getItem(key)!);
+        if (storedUser.username.toLowerCase() === username.toLowerCase()) {
+          userData = localStorage.getItem(key);
+          return true;
+        }
+      }
+      return false;
+    });
+
+    return of(userData ? JSON.parse(userData) : null);
   }
 }

@@ -1,4 +1,3 @@
-/* تنظیمات عمومی برای جلوگیری از اسکرول افقی */
 * {
   box-sizing: border-box;
 }
@@ -8,9 +7,7 @@ body {
   margin: 0;
 }
 
-/* استایل‌های پایه برای دسکتاپ (بدون تغییر) */
 .report-container {
-  /* width: 700px; */
   background-size: cover;
   background-position: center;
   display: flex;
@@ -66,12 +63,12 @@ label {
   color: white;
   padding: 0.7rem 0.5rem;
   border-bottom: 1px solid #ABC79F;
-  width: 80%;
+  width: 100%;
   margin: 0 auto;
 }
 
 input, textarea {
-  width: 80%;
+  width: 100%;
   padding: 0.7rem 0.5rem 0.7rem 2.5rem;
   border: none;
   border-bottom: 1px solid #ABC79F;
@@ -238,9 +235,9 @@ button:disabled {
   text-align: center;
   cursor: pointer;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
-  flex: 1 1 250px;
+  flex: 1 1 290px;
   min-width: 150px;
-  max-width: 250px;
+  max-width: 290px;
   
 }
 
@@ -250,9 +247,9 @@ button:disabled {
 }
 
 .category-card img {
-  max-width: 150px;
-  height: 200px; /* ارتفاع ثابت برای دسکتاپ */
-  object-fit: cover; /* برش تصویر برای پر کردن کادر */
+  max-width: 100%;
+  height: 200px;
+  object-fit: cover; 
   border-radius: 0.3rem;
   width: 100%;
 }
@@ -263,10 +260,13 @@ button:disabled {
   color: white;
 }
 
-/* مدیا کوئری برای تبلت‌ها (تا 768px) */
 @media only screen and (max-width: 768px) {
   .report-container {
     padding: 1rem;
+  }
+
+  .form_wrapper{
+    width: min(9%, 700px);
   }
 
   .categories_wrapper {
@@ -285,7 +285,7 @@ button:disabled {
 
   .category-card img {
     max-width: 100%;
-    height: 180px; /* ارتفاع کمی کوچک‌تر برای تبلت */
+    height: 180px;
     object-fit: cover;
   }
 
@@ -294,11 +294,14 @@ button:disabled {
   }
 }
 
-/* مدیا کوئری برای موبایل‌ها (تا 480px) */
 @media only screen and (max-width: 480px) {
   .report-container {
     padding: 0.5rem;
     margin: 0.5rem auto;
+  }
+
+  .form_wrapper{
+    width: min(95%, 700px);
   }
 
   .categories_wrapper {
@@ -317,7 +320,7 @@ button:disabled {
 
   .category-card img {
     max-width: 100%;
-    height: 160px; /* ارتفاع کوچک‌تر برای موبایل */
+    height: 160px; 
     object-fit: cover;
   }
 
@@ -326,10 +329,13 @@ button:disabled {
   }
 }
 
-/* مدیا کوئری برای موبایل‌های خیلی کوچک (تا 360px) */
 @media only screen and (max-width: 360px) {
   .categories_wrapper {
     padding: 0.5rem;
+  }
+
+  .form_wrapper{
+    width: min(95%, 700px);
   }
 
   .categories {
@@ -344,7 +350,7 @@ button:disabled {
 
   .category-card img {
     max-width: 100%;
-    height: 150px; /* ارتفاع کوچک‌تر برای موبایل‌های خیلی کوچک */
+    height: 150px; 
     object-fit: cover;
   }
 
