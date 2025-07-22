@@ -13,6 +13,9 @@ import { RescuerReportDetailComponent } from './pages/rescuer/rescuer-report-det
 import { RescuerReportsComponent } from './pages/rescuer/rescuer-reports/rescuer-reports.component';
 import { RescuerMapComponent } from './pages/rescuer/rescuer-map/rescuer-map.component';
 import { RescuerProfileComponent } from './pages/rescuer/rescuer-profile/rescuer-profile.component';
+import { UserReportsComponent } from './pages/user/user-reports/user-reports.component';
+import { UserProfileComponent } from './pages/user/user-profile/user-profile.component';
+import { AdminStatsComponent } from './pages/admin/admin-stats/admin-stats.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent }, // صفحه هوم (بدون گارد، عمومیه)
@@ -31,6 +34,10 @@ export const routes: Routes = [
     data: { role: 'admin' }
   },
   { path: 'admin/login', component: LoginComponent }, // مسیر جداگانه برای ادمین (بدون گارد)
+  {
+    path: 'admin/stats',
+    component:AdminStatsComponent
+  },
   {
     path: 'rescuer/reports',
     component: RescuerReportsComponent,
@@ -56,6 +63,14 @@ export const routes: Routes = [
     component: UserComponent,
     canActivate: [AuthGuard],
     data: { role: 'user' }
+  },
+  {
+    path: 'user/reports',
+    component: UserReportsComponent
+  },
+  {
+    path: 'user/profile',
+    component:UserProfileComponent
   },
   { path: 'register', component: RegisterComponent }, // صفحه ثبت‌نام (بدون گارد)
   { path: 'forgot-password', component: ForgotPasswordComponent }, // صفحه فراموشی رمز (بدون گارد)

@@ -1,0 +1,34 @@
+<app-header></app-header>
+<div class="admin-stats">
+  <h2>داشبورد آمار ادمین</h2>
+  @if (isLoading()) {
+    <div class="loading">در حال لود...</div>
+  }
+  @if (errorMessage()) {
+    <div class="error-message">{{ errorMessage() }}</div>
+  }
+  @if (stats()) {
+    <div>
+      <p><strong>کل کاربران:</strong> {{ stats()?.totalUsers }}</p>
+      <p><strong>امدادگرها:</strong> {{ stats()?.rescuers }}</p>
+      <p><strong>کاربران عادی:</strong> {{ stats()?.regularUsers }}</p>
+      <p><strong>فعال امروز:</strong> {{ stats()?.activeUsersToday }}</p>
+      <p><strong>فعال این هفته:</strong> {{ stats()?.activeUsersThisWeek }}</p>
+      <p><strong>فعال این ماه:</strong> {{ stats()?.activeUsersThisMonth }}</p>
+      <p><strong>لاگین موفق:</strong> {{ stats()?.loginSuccessCount }}</p>
+      <p><strong>لاگین ناموفق:</strong> {{ stats()?.loginFailCount }}</p>
+      <p><strong>کل گزارش‌ها:</strong> {{ stats()?.totalReports }}</p>
+      <p><strong>در حال بررسی:</strong> {{ stats()?.reportsInReview }}</p>
+      <p><strong>بررسی‌شده:</strong> {{ stats()?.reportsReviewed }}</p>
+      <p><strong>ردشده:</strong> {{ stats()?.reportsRejected }}</p>
+      <p><strong>کاربران آنلاین:</strong> {{ stats()?.onlineUsers }}</p>
+      <p><strong>آخرین به‌روزرسانی:</strong> {{ stats()?.lastUpdated | localDate }}</p> 
+      @if (stats()?.avgReviewTime) {
+        <p><strong>میانگین زمان بررسی:</strong> {{ stats()?.avgReviewTime }} ساعت</p>
+      }
+      @if (stats()?.assignedReports) {
+        <p><strong>گزارش‌های ارجاع‌شده:</strong> {{ stats()?.assignedReports }}</p>
+      }
+    </div>
+  }
+</div>

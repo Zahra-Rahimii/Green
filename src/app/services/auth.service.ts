@@ -89,7 +89,7 @@ export class AuthService {
       phone: credentials.phone || '',
       role: credentials.role || 'user',
       status: 'active',
-      createdAt: new Date().toISOString(), // تاریخ میلادی نگه داشته می‌شه
+      createdAt: new Date().toISOString(),
       password: credentials.password
     };
 
@@ -250,7 +250,6 @@ export class AuthService {
     const newEmail = updatedUser.email;
     let shouldCheckEmail = false;
 
-    // فقط اگه ایمیل جدید وجود داره و با ایمیل فعلی فرق داره، چک کن
     if (newEmail && newEmail !== user.email) {
       shouldCheckEmail = true;
     }
@@ -269,7 +268,7 @@ export class AuthService {
       }
     }
 
-    const updatedProfile: UserProfile = { ...user, ...updatedUser, updatedAt: new Date().toISOString() }; // تاریخ میلادی نگه داشته می‌شه
+    const updatedProfile: UserProfile = { ...user, ...updatedUser, updatedAt: new Date().toISOString() };
     try {
       localStorage.setItem(userKey, JSON.stringify(updatedProfile));
       this.userService.syncUsers();
@@ -298,5 +297,9 @@ export class AuthService {
     });
 
     return of(userData ? JSON.parse(userData) : null);
+  }
+
+  getUserList(): Observable<UserProfile[]> {
+    return this.userService.getUsers();
   }
 }

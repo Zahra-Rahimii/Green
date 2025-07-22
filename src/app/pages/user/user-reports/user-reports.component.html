@@ -1,0 +1,41 @@
+<app-header></app-header>
+<div class="user-reports" dir="rtl">
+  <h2>گزارش‌های ارسالی من</h2>
+  <div *ngIf="isLoading()" class="loading">در حال بارگذاری...</div>
+  <div *ngIf="!isLoading()">
+    <div class="filters">
+      <select (change)="filterReports($event)">
+        <option value="">همه وضعیت‌ها</option>
+        <option value="in_review">در حال بررسی</option>
+        <option value="reviewed">رسیدگی شده</option>
+        <option value="rejected">رد شده</option>
+      </select>
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>عنوان</th>
+          <th>دسته‌بندی</th>
+          <th>وضعیت</th>
+          <th>تاریخ ثبت</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (report of reports$ | async; track report.id) {
+          <tr *ngIf="filterStatus() === '' || report.status === filterStatus()">
+            <td>{{ report.title }}</td>
+            <td>{{ report.category }}</td>
+            <td>{{ report.status === 'in_review' ? 'در حال بررسی' : report.status === 'reviewed' ? 'رسیدگی شده' : 'رد شده' }}</td>
+            <td>{{ report.createdAt | localDate:'jYYYY-jMM-jDD dddd HH:mm' }}</td>
+            <td>
+              <button (click)="viewDetail(report.id)">جزئیات</button>
+              <button (click)="deleteReport(report.id)">حذف</button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+    <div *ngIf="(reports$ | async)?.length === 0">هیچ گزارشی یافت نشد.</div>
+  </div>
+</div>

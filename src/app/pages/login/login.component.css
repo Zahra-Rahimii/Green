@@ -10,7 +10,8 @@
 }
 
 .form_wrapper {
-  width: min(80%, 700px);
+  width: min(78%, 700px);
+  max-height: 450px;
   background: linear-gradient(135deg, rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.4));
   border-radius: 1rem;
   color: white;
@@ -20,7 +21,6 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
   border: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1.5rem 2.5rem;
-  margin: 0 auto;
   backdrop-filter: blur(8px);
 }
 
@@ -107,21 +107,24 @@ input.invalid {
 }
 
 .login_btn {
-  width: 80%; 
+  width: 80%;
   border-radius: 2rem;
   border: none;
   cursor: pointer;
   background: linear-gradient(90deg, #75A95F, #5e8b47);
-  padding: 0.9rem 1.5rem; 
-  margin-top: 1rem;
-  font-size: 1.05rem;
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem auto;
+  font-size: 1rem;
   font-weight: 600;
   color: white;
-  align-self: center;
-  justify-self: center;
-  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   display: block;
   align-self: center;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -webkit-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -moz-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -ms-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -o-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  
 }
 
 .login_btn:hover {
@@ -172,16 +175,10 @@ input.invalid {
   width: 100%;
 }
 
-@media (max-width: 600px) {
+@media only screen and (max-width: 768px) {
   .form_wrapper {
     width: 90%;
     padding: 1.5rem;
-  }
-
-  .login_btn {
-    width: 85%; 
-    font-size: 1rem;
-    padding: 0.8rem 1.2rem;
   }
 
   h2 {
@@ -191,5 +188,26 @@ input.invalid {
   .links {
     gap: 0.8rem; 
     margin-top: 1.2rem;
+  }
+}
+@media only screen and (max-width: 480px) {
+  .form_wrapper {
+    width: 90%;
+  }
+  input::placeholder{
+    font-size: 0.8rem;
+  }
+  .login_btn {
+    width: 80%; 
+  }
+
+
+}
+@media only screen and (max-width: 360px) {
+  .form_wrapper {
+    width: 75%;
+  }
+   input::placeholder{
+    font-size: 0.7rem;
   }
 }

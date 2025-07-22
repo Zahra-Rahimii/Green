@@ -73,7 +73,7 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
       const categoryColors: { [key: string]: string } = {
         'forest_fire': '#FF5733',
         'water_pollution': '#3498DB',
-        'illegal_logging': '#E74C3C',
+        'illegal_logging': '#1ecc3b',
         'illegal_hunting': '#F1C40F',
         'habitat_destruction': '#9B59B6',
         'other': '#7F8C8D'
@@ -99,7 +99,7 @@ export class RescuerMapComponent implements OnInit, AfterViewInit {
           this.markers.push(marker);
           const rescuerLocation = L.latLng(35.6892, 51.3890); // مختصات فرضی امدادگر
           const route = L.polyline([rescuerLocation, L.latLng(report.latitude!, report.longitude)], {
-            color: '#FF4500',
+            color: '#1b1715ff',
             weight: 2,
             opacity: 0.7
           }).addTo(this.map!);

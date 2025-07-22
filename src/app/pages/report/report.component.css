@@ -179,6 +179,10 @@ button:disabled {
   color: rgba(255, 255, 255, 0.9);
 }
 
+.location_btn{
+display: flex;
+}
+
 .map_btn {
   display: flex;
   justify-content: space-between;
@@ -194,6 +198,8 @@ button:disabled {
   max-width: 80%;
   margin-top: 0.5rem;
   border-radius: 0.5rem;
+
+
 }
 
 .error-message {
@@ -266,7 +272,7 @@ button:disabled {
   }
 
   .form_wrapper{
-    width: min(9%, 700px);
+    width: min(90%, 700px);
   }
 
   .categories_wrapper {
@@ -357,4 +363,16 @@ button:disabled {
   .category-card p {
     font-size: 0.75rem;
   }
+
+  button[type="button"] {
+    font-size: 0.7rem;
+    width: max-content;
+    margin: 1rem 0.2rem;
+}
+
+.coordinates p {
+  line-height: 2rem;
+  font-size: 0.7rem;
+  color: rgba(255, 255, 255, 0.9);
+}
 }

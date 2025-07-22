@@ -1,0 +1,91 @@
+.profile-container {
+  max-width: 800px;
+  margin: 20px auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  direction: rtl;
+}
+
+.profile-container h2 {
+  color: #2e7d32;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.profile-container .profile-details p {
+  margin: 10px 0;
+  padding: 10px;
+  background-color: #fff;
+  border-radius: 4px;
+  border-left: 4px solid #66bb6a;
+}
+
+.profile-container .profile-details strong {
+  color: #1b5e20;
+  margin-right: 10px;
+}
+
+.profile-container input {
+  margin: 5px 0;
+  padding: 8px;
+  width: 250px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+}
+
+.profile-container button {
+  background-color: #66bb6a;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin: 0 5px 10px 0;
+}
+
+.profile-container button:hover {
+  background-color: #43a047;
+}
+
+.profile-container .loading {
+  text-align: center;
+  padding: 20px;
+  color: #95a5a6;
+  font-style: italic;
+}
+
+.error-message {
+  padding: 10px;
+  border-radius: 4px;
+  min-height: 1.2rem;
+  color: #ff4d4d;
+  font-size: 0.85rem;
+  margin-top: 0.2rem;
+  text-align: right;
+}
+
+.success-message {
+  color: #2e7d32;
+  padding: 10px;
+  border-radius: 4px;
+  margin: 10px 0;
+}
+
+@media (max-width: 600px) {
+  .profile-container {
+    margin: 10px;
+    padding: 10px;
+  }
+
+  .profile-container button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+  }
+
+  .profile-container input {
+    width: 100%;
+  }
+}

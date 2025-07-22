@@ -117,14 +117,18 @@ input.invalid {
   border: none;
   cursor: pointer;
   background: linear-gradient(90deg, #75A95F, #5e8b47);
-  padding: 0.8rem 1.2rem; 
-  margin: 0.5rem auto; 
-  font-size: 1rem; 
+  padding: 0.8rem 1.2rem;
+  margin: 0.5rem auto;
+  font-size: 1rem;
   font-weight: 600;
   color: white;
   display: block;
   align-self: center;
   transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -webkit-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -moz-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -ms-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
+  -o-transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
 }
 
 .register_btn:hover {

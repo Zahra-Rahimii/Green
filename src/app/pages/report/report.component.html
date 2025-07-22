@@ -63,8 +63,10 @@
             <p>عرض جغرافیایی: {{ reportForm.get('latitude')?.value ?? 'انتخاب نشده' }}</p>
             <p>طول جغرافیایی: {{ reportForm.get('longitude')?.value ?? 'انتخاب نشده' }}</p>
           </div>
-          <button type="button" (click)="getUserLocation()">موقعیت من</button>
+         <div class="location_btn">
+           <button type="button" (click)="getUserLocation()">موقعیت من</button>
           <button type="button" (click)="setManualLocation()">موقعیت رو دستی تنظیم کن</button>
+         </div>
         </div>
 
         <div class="form-group">

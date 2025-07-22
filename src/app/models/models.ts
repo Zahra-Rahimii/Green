@@ -87,3 +87,24 @@ export interface Notification {
   isRead: boolean;
   createdAt: string;
 }
+
+export interface AdminStats {
+  totalUsers: number;
+  rescuers: number;
+  regularUsers: number;
+  activeUsersToday: number;
+  activeUsersThisWeek: number;
+  activeUsersThisMonth: number;
+  loginSuccessCount: number;
+  loginFailCount: number;
+  totalReports: number;
+  reportsInReview: number;
+  reportsReviewed: number;
+  reportsRejected: number;
+  onlineUsers: number;
+  lastUpdated: string;
+  avgReviewTime?: number; // اختیاری
+  assignedReports?: number; // اختیاری
+  reportsByCategory: { [key: string]: number };
+  userActivityTrend: { date: string; count: number }[];
+}
